@@ -334,9 +334,17 @@
     \dot{V}_R &= \dfrac{Z_R}{Z_R + Z_C}\dot{V}_{\mathrm{in}} \\
     &= \dfrac{j\omega RC}{1+j\omega RC}\dot{V}_{\mathrm{in}} \label{eq.HPFの特性}
 \end{align}
-また\ref{eq.HPFの特性}に\(\exp(j\omega t)\)を作用させて虚部をとる操作をすると
+また\ref{eq.HPFの特性}式に\(\exp(j\omega t)\)をかけて虚部をとる操作をすると
 \begin{align}
-    \Im \ab(\dot{V}_R\exp(j\omega t)) &= \Im \ab(\dfrac{j\omega RC}{1+j\omega RC}\dot{V}_{\mathrm{in}}\exp(j\omega t))
+    \Im \ab(\dot{V}_R\exp(j\omega t)) &= \Im \ab(\dfrac{j\omega RC}{1+j\omega RC}\dot{V}_{\mathrm{in}}\exp(j\omega t)) \\
+    &= \omega RC \sqrt{\dfrac{1}{1+(\omega RC)^2}}V_{0}\sin \ab(\omega t + \alpha +\arctan\ab(\dfrac{1}{\omega RC}))
 \end{align}
+結局LPFと同様の話だが、出力振幅は入力電圧の振幅に対して\(\omega RC \sqrt{\tfrac{1}{1+(\omega RC)^2}}\)になっている。これを\(\omega\)の関数とみてグラフをかいたものが図
+\begin{figure}[htbp]
+    \centering
+    
+    \caption{<caption>}
+    \label{<label>}
+\end{figure}
 \subsubsection{共振回路}
 \end{document}
