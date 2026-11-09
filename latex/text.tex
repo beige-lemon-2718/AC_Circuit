@@ -283,7 +283,7 @@
 \begin{align}
     \dot{V}_{\mathrm{out}} &= \dfrac{1}{1 + j\omega RC}\dot{V}_{\mathrm{in}} \label{eq.LPFの特性}
 \end{align}
-である。これを踏まえて実際の出力波形はどうなるだろうか。\ref{eq.LPFの特性}に、\(\exp(j\omega t)\)を作用させて、虚部をとれば良い。
+である。これを踏まえて実際の出力波形はどうなるだろうか。\ref{eq.LPFの特性}式に、\(\exp(j\omega t)\)をかけて、虚部をとれば良い。
 \begin{align}
     \Im\ab(\dot{V}_{\mathrm{out}}\exp(j\omega t)) &= \Im\ab(\dfrac{1}{1 + j\omega RC}\dot{V}_{\mathrm{in}}\exp(j\omega t)) \\
     &= \Im\ab(\dfrac{1}{1 + j\omega RC}V_{0}\exp(j \alpha)\exp(j\omega t)) \\
@@ -301,7 +301,9 @@
     \label{fig.LPFのボード線図}
 \end{figure}
 
-また出力電圧の位相をみると、入力に対して\(\arctan(\omega RC)\)だけ位相が遅れていることを示している。つまり、適当に抵抗器やキャパシタの抵抗値やキャパシタンスを変更すれば任意の位相差の信号を得られる。
+また出力電圧の位相をみると、入力に対して\(\arctan(\omega RC)\)だけ位相が遅れていることを示している。つまり、適当に抵抗器やキャパシタの、抵抗値やキャパシタンスを変更すれば任意の位相差の信号を得られる。
+
+% また、交流回路に特有ではないのだが時定数\(\tau\)という物理量をここで定める。時定数は簡単に言えばキャパシタの充電に時間がかかるので、最初は所定の回路性能がでない、これが一定のしきい値を超えるまでの時間が時定数である。時定数は回路の応答特性などを知るために必要である。
 \subsubsection{ハイパスフィルター(HPF)}
 次にハイパスフィルターを同様に考えていく。ハイパスフィルターの例は次のような回路である。
 \begin{figure}[htbp]
@@ -339,12 +341,51 @@
     \Im \ab(\dot{V}_R\exp(j\omega t)) &= \Im \ab(\dfrac{j\omega RC}{1+j\omega RC}\dot{V}_{\mathrm{in}}\exp(j\omega t)) \\
     &= \omega RC \sqrt{\dfrac{1}{1+(\omega RC)^2}}V_{0}\sin \ab(\omega t + \alpha +\arctan\ab(\dfrac{1}{\omega RC}))
 \end{align}
-結局LPFと同様の話だが、出力振幅は入力電圧の振幅に対して\(\omega RC \sqrt{\tfrac{1}{1+(\omega RC)^2}}\)になっている。これを\(\omega\)の関数とみてグラフをかいたものが図
+結局LPFと同様の話だが、出力振幅は入力電圧の振幅に対して\(\omega RC \sqrt{\tfrac{1}{1+(\omega RC)^2}}\)になっている。これを\(\omega\)の関数とみてグラフをかいたものが図\ref{fig.hpfのボード線図}である。今度は高い周波数の信号ほど振幅が大きいことがみてとれる。つまり、高い周波数ほどよく通す回路であり、しかるにハイパスフィルターなのである。
 \begin{figure}[htbp]
     \centering
-    
-    \caption{<caption>}
-    \label{<label>}
+    \includegraphics[width=0.8\linewidth]{../hpf_graph.pdf}
+    \caption{}
+    \label{fig.hpfのボード線図}
 \end{figure}
 \subsubsection{共振回路}
+共振回路は簡単にいえば特有の周波数だけを通すフィルタになっているということもできる。共振回路はインダクタとキャパシタの組み合わせで作ることができる。
+\begin{figure}[htbp]
+    \centering
+    \begin{tikzpicture}[transform shape]
+	% Paths, nodes and wires:
+	\draw (1, 1) to[sinusoidal voltage source] (1, 4);
+	\draw (5.5, 1) |- (1, 1);
+	\node[ground] at (5, 1){};
+	\node[shape=rectangle, minimum width=0.715cm, minimum height=0.715cm] at (1.875, 2.5){} node[anchor=north west, align=left, text width=0.327cm, inner sep=6pt] at (1.5, 2.875){$V_{\mathrm{in}}$};
+	\node[shape=rectangle, minimum width=0.715cm, minimum height=0.715cm] at (4.625, 1.75){} node[anchor=north west, align=left, text width=0.327cm, inner sep=6pt] at (4.25, 2.125){$C$};
+	\draw (5.5, 4) to[american inductor] (5.5, 2.5);
+	\draw (5.5, 2.5) to[capacitor] (5.5, 1);
+	\draw (1, 4) -- (5.5, 4);
+	\node[shape=rectangle, minimum width=0.715cm, minimum height=0.715cm] at (4.625, 3.25){} node[anchor=north west, align=left, text width=0.327cm, inner sep=6pt] at (4.25, 3.625){$L$};
+	\draw[-latex] (1, 4.5) -- (6.5, 4.5) -- (6.5, -0) -- (0.5, -0) -- (0.5, 4.5) -- (1, 4.5);
+	\node[shape=rectangle, minimum width=0.84cm, minimum height=0.715cm] at (7.063, 2.5){} node[anchor=north west, align=left, text width=0.452cm, inner sep=6pt] at (6.625, 2.875){$I$};
+\end{tikzpicture}
+    \caption{LC共振回路}
+    \label{fig.共振回路}
+\end{figure}
+
+
+この回路のインピーダンスは
+\begin{equation}
+    Z_C+Z_L=j\omega L - \frac{j}{\omega C}=j\ab(\omega L - \frac{1}{\omega C}) \label{eq.ZC+ZL}
+\end{equation}
+である。
+
+この回路は、回路の電流量を考える。
+\begin{align}
+    \dot{V} &= j\ab(\omega L - \frac{1}{\omega C}) \dot{I} \\
+    \dot{I} &= \dfrac{\dot{V}}{j\ab(\omega L - \frac{1}{\omega C})} \\
+    &= -j\dfrac{\dot{V}}{\ab(\omega L - \frac{1}{\omega C})} \\
+    i(t) &= \Im\ab(-j\dfrac{\dot{V}}{\ab(\omega L - \frac{1}{\omega C})}\exp(j \omega t)) \\
+    &= \Im\ab(-j\dfrac{V_0}{\ab(\omega L - \frac{1}{\omega C})}\exp(j \omega t + \alpha)) \\
+    &= -\dfrac{V_0}{\ab(\omega L - \frac{1}{\omega C})}\cos(\omega t + \alpha) \\
+    &= \dfrac{V_0}{\ab(\omega L - \frac{1}{\omega C})}\cos(\omega t + \alpha + \pi)
+\end{align}
+振幅をみると\(\dfrac{1}{\ab(\omega L - \frac{1}{\omega C})}\)がかかっている。これは
 \end{document}
