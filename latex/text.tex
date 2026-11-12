@@ -293,7 +293,7 @@
 \end{align}
 一応式変形の説明をすると\ref{eq.インピを変換する前}式から\ref{eq.インピを変換した後}式で、\(\tfrac{1}{1+j\omega RC}\)を指数表示に変換している。\(\tfrac{1}{1+j\omega RC} = \sqrt{\tfrac{1+\ab(\omega RC)^2}{\ab(1+\ab(\omega RC)^2)^2}}\exp\ab(-j \arctan (\omega RC))\)。
 
-つまり出力振幅は入力電圧の振幅に対して\(\sqrt{\tfrac{1}{1+\ab(\omega RC)^2}}\)倍になっている。これを\(\omega\)の関数とみてグラフをかいたものが図\ref{fig.LPFのボード線図}である。角振動数が大きくなるほど、振幅が小さくなるような振る舞いが見られる。つまり、低い周波数ほどよく通す回路であり、そのためにローパスフィルターの名前をもつ。
+つまり出力振幅は入力電圧の振幅に対して\(\sqrt{\tfrac{1}{1+\ab(\omega RC)^2}}\)倍になっている。出力振幅と入力振幅の比を\textbf{伝達関数(Transfer Function)}\(T(\omega)=\tfrac{V_\mathrm{out}}{V_\mathrm{in}}\)といい、これのグラフをかいたものが図\ref{fig.LPFのボード線図}である。角振動数が大きくなるほど、伝達関数が小さくなるような振る舞いが見られる。つまり、低い周波数ほどよく通す回路であり、そのためにローパスフィルターの名前をもつ。
 \begin{figure}[htbp]
     \centering
     \includegraphics[width = 0.8\linewidth]{../lpf_graph.pdf}
@@ -302,6 +302,8 @@
 \end{figure}
 
 また出力電圧の位相をみると、入力に対して\(\arctan(\omega RC)\)だけ位相が遅れていることを示している。つまり、適当に抵抗器やキャパシタの、抵抗値やキャパシタンスを変更すれば任意の位相差の信号を得られる。
+
+また十分に高い角速度\(\omega(>>\tfrac{1}{RC})\)のときを考える。これはつまり\(c\omega\)が\(\tfrac{1}{R}\)に対して十分に大きいということである。
 
 % また、交流回路に特有ではないのだが時定数\(\tau\)という物理量をここで定める。時定数は簡単に言えばキャパシタの充電に時間がかかるので、最初は所定の回路性能がでない、これが一定のしきい値を超えるまでの時間が時定数である。時定数は回路の応答特性などを知るために必要である。
 \subsubsection{ハイパスフィルター(HPF)}
@@ -387,5 +389,7 @@
     &= -\dfrac{V_0}{\ab(\omega L - \frac{1}{\omega C})}\cos(\omega t + \alpha) \\
     &= \dfrac{V_0}{\ab(\omega L - \frac{1}{\omega C})}\cos(\omega t + \alpha + \pi)
 \end{align}
-振幅をみると\(\dfrac{1}{\ab(\omega L - \frac{1}{\omega C})}\)がかかっている。これは
+電流振幅をみると\(\dfrac{1}{\ab(\omega L - \frac{1}{\omega C})}\)がかかっている。これは\(\dfrac{\omega C}{\omega^2 LC -1}\)となる。もし\(\omega = \tfrac{1}{\sqrt{LC}}\)へ近づくとき、分母が\(0\)に近づくので、電流振幅の係数は正無限大へ発散する。現実の回路ではかならず\(R\)の要素があるので発散することはないが、\(\omega = \tfrac{1}{\sqrt{LC}}\)で回路の電流振幅は最大化される。
+
+\section{矩形波信号}
 \end{document}
